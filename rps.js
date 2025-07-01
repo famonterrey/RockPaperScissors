@@ -1,7 +1,6 @@
-let humanScore = 0;
-let computerScore = 0;
 
 
+// Función que obtiene la elección de la computadora
 function getComputerChoice(){
     let NumAuxiliar = parseInt(Math.random()*10);
     let answer = "";
@@ -16,45 +15,65 @@ function getComputerChoice(){
     return answer
 }
 
-
+// Función que determina la elección del jugador
 function getHumanChoice(){
     const HumanChoice = prompt("piedra, papel o tijera?");
     return HumanChoice;
 }
 
+//Función que determina quien es el ganador
+//1: Gana PC; 2: Gana usuario; 3: Empate
 function playRound(humanChoice, computerChoice) {
-    let result = "Empate!";
+    let result = 3;
     const lowerhumanChoice = humanChoice.toLowerCase()
     if (lowerhumanChoice === "piedra"){
         if (computerChoice === "papel"){
-            computerScore++;
-            result = "Perdiste! papel le gana a piedra";
+            result = 1;
         }   else if (computerChoice === "tijera"){
-            humanScore++;
-            result = "Ganaste! piedra le gana a tijera";
+            result = 2;
         } 
     } else if (lowerhumanChoice === "papel"){
         if (computerChoice === "tijera"){
-            computerScore++;
-            result = "Perdiste! tijera le gana a papel";
+            result = 1;
         }   else if (computerChoice === "piedra"){
-            humanScore++;
-            result = "Ganaste! papel le gana a piedra";
+            result = 2;
         } 
     } else if (lowerhumanChoice === "tijera"){
         if (computerChoice === "piedra"){
-            computerScore++;
-            result = "Perdiste! piedra le gana a tijera";
+            result = 1;
         }   else if (computerChoice === "papel"){
-            humanScore++;
-            result = "Ganaste! tijera le gana a papel";
+            result = 2;
         } 
     }
 
     return result;
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame(){
 
-console.log(playRound(humanSelection, computerSelection));
+let humanScore = 0;
+let computerScore = 0;
+
+ while (computerScore < 3 && humanScore < 3){
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    let resultadoJuego = playRound(humanSelection, computerSelection);
+    if (resultadoJuego === 1){
+        console.log("Gana computadora! "+ computerSelection + " le gana a " + humanSelection.toLowerCase());
+        alert("Gana computadora! "+ computerSelection + " le gana a " + humanSelection.toLowerCase());
+        computerScore++;
+    } else if (resultadoJuego === 2){
+        console.log("Ganaste! "+ humanSelection.toLowerCase() + " le gana a " + computerSelection);
+        alert("Ganaste! "+ humanSelection.toLowerCase() + " le gana a " + computerSelection);
+        humanScore++;
+    } else {
+        console.log("Empate");
+        alert("Empate");
+    }
+}
+
+return "Computadora: " + computerScore + " | Usuario: " + humanScore;
+
+}
+
+console.log(playGame());
